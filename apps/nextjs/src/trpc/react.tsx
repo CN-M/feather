@@ -22,6 +22,7 @@ const getQueryClient = () => {
 		return createQueryClient();
 	} else {
 		// Browser: use singleton pattern to keep the same query client
+		// biome-ignore lint/suspicious/noAssignInExpressions: known
 		return (clientQueryClientSingleton ??= createQueryClient());
 	}
 };
