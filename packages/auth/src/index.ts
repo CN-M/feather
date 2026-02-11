@@ -7,52 +7,48 @@ import { oAuthProxy } from "better-auth/plugins";
 import { db } from "@feather/db/client";
 
 export function initAuth<
-  TExtraPlugins extends BetterAuthPlugin[] = [],
+	TExtraPlugins extends BetterAuthPlugin[] = [],
 >(options: {
-  baseUrl: string;
-  productionUrl: string;
-  secret: string | undefined;
+	baseUrl: string;
+	productionUrl: string;
+	secret: string | undefined;
 
-  googleClientId: string;
-  googleClientSecret: string;
-  discordClientId: string;
-  discordClientSecret: string;
-  extraPlugins?: TExtraPlugins;
+	googleClientId: string;
+	googleClientSecret: string;
+	discordClientId: string;
+	discordClientSecret: string;
+	extraPlugins?: TExtraPlugins;
 }) {
-  const config = {
-    database: drizzleAdapter(db, {
-      provider: "pg",
-    }),
-    baseURL: options.baseUrl,
-    secret: options.secret,
-    plugins: [
-      oAuthProxy({
-        productionURL: options.productionUrl,
-      }),
-      expo(),
-      ...(options.extraPlugins ?? []),
-    ],
-    socialProviders: {
-      discord: {
-        clientId: options.discordClientId,
-        clientSecret: options.discordClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/discord`,
-      },
-      google: {
-        clientId: options.googleClientId,
-        clientSecret: options.googleClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/google`
-      }
-    },
-    trustedOrigins: ["expo://"],
-    onAPIError: {
-      onError(error, ctx) {
-        console.error("BETTER AUTH API ERROR", error, ctx);
-      },
-    },
-  } satisfies BetterAuthOptions;
+	const config = {
+		database: drizzleAdapter(db, {
+			provider: "pg",
+		}),
+		baseURL: options.baseUrl,
+		secret: options.secret,
+		plugins: [
+			oAuthProxy({
+				productionURL: options.productionUrl,
+			}),
+			expo(),
+			...(options.extraPlugins ?? []),
+		],
+		socialProviders: {
+			google: {
+				clientId: options.googleClientId,
+				clientSecret: options.googleClientSecret,
+				// redirectURI: `${options.productionUrl}/api/auth/callback/google`,
+				redirectURI: `http://localhost:3000/api/auth/callback/google`,
+			},
+		},
+		trustedOrigins: ["expo://"],
+		onAPIError: {
+			onError(error, ctx) {
+				console.error("BETTER AUTH API ERROR", error, ctx);
+			},
+		},
+	} satisfies BetterAuthOptions;
 
-  return betterAuth(config);
+	return betterAuth(config);
 }
 
 export type Auth = ReturnType<typeof initAuth>;
