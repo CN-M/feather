@@ -13,6 +13,8 @@ export function initAuth<
   productionUrl: string;
   secret: string | undefined;
 
+  googleClientId: string;
+  googleClientSecret: string;
   discordClientId: string;
   discordClientSecret: string;
   extraPlugins?: TExtraPlugins;
@@ -36,6 +38,11 @@ export function initAuth<
         clientSecret: options.discordClientSecret,
         redirectURI: `${options.productionUrl}/api/auth/callback/discord`,
       },
+      google: {
+        clientId: options.googleClientId,
+        clientSecret: options.googleClientSecret,
+        redirectURI: `${options.productionUrl}/api/auth/callback/google`
+      }
     },
     trustedOrigins: ["expo://"],
     onAPIError: {
