@@ -21,7 +21,7 @@
 		"check:fix": "turbo run check:fix",
 		"lint:ws": "pnpm dlx sherif@latest",
 		"lint:ws:fix": "pnpm dlx sherif@latest --fix",
-		"postinstall": "pnpm lint:ws:fix",
+		"postinstall": "pnpm lint:ws",
 		"typecheck": "turbo run typecheck",
 		"ui-add": "turbo run ui-add",
 		"android": "expo run:android",
