@@ -133,13 +133,3 @@ See `.env.example` for required configuration.
 ## 📄 License
 
 MIT
-
----
-
-If you want next, I can:
-- Tighten this for **FAANG-style reviewers**
-- Add **architecture diagrams (ASCII or SVG)**
-- Rewrite it in a **more marketing-oriented tone**
-- Add a **“Why these tech choices?”** section
-
-Say the word and we’ll refine it.
