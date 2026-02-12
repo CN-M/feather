@@ -1,37 +1,35 @@
 {
-  "name": "@feather/api",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    }
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint --flag unstable_native_nodejs_ts_config",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "dependencies": {
-    "@feather/auth": "workspace:*",
-    "@feather/db": "workspace:*",
-    "@feather/validators": "workspace:*",
-    "@trpc/server": "catalog:",
-    "superjson": "2.2.3",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@feather/eslint-config": "workspace:*",
-    "@feather/prettier-config": "workspace:*",
-    "@feather/tsconfig": "workspace:*",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "typescript": "catalog:"
-  },
-  "prettier": "@feather/prettier-config"
+	"name": "@feather/api",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./src/index.ts"
+		}
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"dev": "tsc",
+		"lint": "biome lint",
+		"format": "biome format",
+		"check": "biome check",
+		"check:fix": "biome check --write",
+		"check:unsafe:fix": "biome check --write --unsafe",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"dependencies": {
+		"@feather/auth": "workspace:*",
+		"@feather/db": "workspace:*",
+		"@feather/validators": "workspace:*",
+		"@trpc/server": "catalog:",
+		"superjson": "2.2.3",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@feather/tsconfig": "workspace:*",
+		"typescript": "catalog:"
+	}
 }

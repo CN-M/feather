@@ -1,5 +1,5 @@
 {
-  "extends": "@feather/tsconfig/compiled-package.json",
-  "include": ["src"],
-  "exclude": ["node_modules"]
+	"extends": "@feather/tsconfig/compiled-package.json",
+	"include": ["src"],
+	"exclude": ["node_modules"]
 }

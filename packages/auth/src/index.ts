@@ -1,10 +1,9 @@
-import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { expo } from "@better-auth/expo";
+import { db } from "@feather/db/client";
+import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
-
-import { db } from "@feather/db/client";
 
 export function initAuth<
 	TExtraPlugins extends BetterAuthPlugin[] = [],

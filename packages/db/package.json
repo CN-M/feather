@@ -25,8 +25,8 @@
 		"format": "biome format",
 		"check": "biome check",
 		"check:fix": "biome check --write",
-		"setup:db": "pnpm with-env tsx ./src/setup-db.ts",
 		"check:unsafe:fix": "biome check --write --unsafe",
+		"setup:db": "pnpm with-env tsx ./src/setup-db.ts",
 		"push": "pnpm with-env drizzle-kit push",
 		"studio": "pnpm with-env drizzle-kit studio",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
@@ -43,7 +43,6 @@
 	"devDependencies": {
 		"@feather/tsconfig": "workspace:*",
 		"drizzle-kit": "^0.31.5",
-		"eslint": "catalog:",
 		"typescript": "catalog:"
 	}
 }
