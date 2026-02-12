@@ -1,4 +1,4 @@
-# 🪶 Feather
+# 🐦 Feather
 
 **Feather** is a modern, production-minded **Twitter clone** built to showcase scalable full-stack architecture, clean domain boundaries, and real-world development practices.
 
@@ -81,7 +81,7 @@ auth/         # Authentication configuration
 ## 🗺️ Roadmap
 
 ### Phase 1 – Core Twitter Experience (Current)
-- [ ] Auth (email/password)
+- [ ] Auth (Gmail Login/email + Password)
 - [ ] Tweets (create, like, delete)
 - [ ] Global feed
 - [ ] Profile feed
