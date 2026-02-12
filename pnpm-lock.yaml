@@ -211,7 +211,7 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
-  apps/nextjs:
+  apps/web:
     dependencies:
       '@feather/api':
         specifier: workspace:*
