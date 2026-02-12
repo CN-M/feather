@@ -1,11 +1,3 @@
-Below is a **clean, professional README** you can drop straight into `README.md`.
-It’s written to read well to **recruiters, senior engineers, and reviewers**, not just users.
-
-It clearly states that **Feather is a Twitter clone**, highlights the **core stack**, and keeps tooling at the right level of prominence.
-
----
-
-```md
 # 🪶 Feather
 
 **Feather** is a modern, production-minded **Twitter clone** built to showcase scalable full-stack architecture, clean domain boundaries, and real-world development practices.
@@ -151,4 +143,3 @@ If you want next, I can:
 - Add a **“Why these tech choices?”** section
 
 Say the word and we’ll refine it.
-```
