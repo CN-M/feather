@@ -65,7 +65,7 @@ _(DX tooling is intentionally lightweight and automated to keep focus on correct
 
 ## 📁 Project Structure (High Level)
 
-
+```
 apps/
 web/          # Next.js web app
 packages/
@@ -73,6 +73,7 @@ db/           # Drizzle schema & migrations
 domain/       # Core business logic
 trpc/         # API routers & procedures
 auth/         # Authentication configuration
+```
 
 
 ---
