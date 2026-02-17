@@ -1,41 +1,56 @@
-import { Suspense } from "react";
-
-import { HydrateClient, prefetch, trpc } from "~/trpc/server";
-import { AuthShowcase } from "./_components/auth-showcase";
-import {
-	CreatePostForm,
-	PostCardSkeleton,
-	PostList,
-} from "./_components/posts";
+import Link from "next/link";
 
 export default function HomePage() {
-	prefetch(trpc.post.all.queryOptions());
-
 	return (
-		<HydrateClient>
-			<main className="container h-screen py-16">
-				<div className="flex flex-col items-center justify-center gap-4">
-					<h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-						Create <span className="text-primary">T3</span> Turbo
-					</h1>
-					<AuthShowcase />
+		<main className="flex min-h-screen items-center justify-center bg-background px-6">
+			<div className="w-full max-w-3xl">
+				<div className="rounded-2xl border bg-card p-12 shadow-sm">
+					<div className="space-y-8 text-center">
+						<div className="text-sm uppercase tracking-widest text-muted-foreground">
+							Full-Stack Social Platform
+						</div>
 
-					<CreatePostForm />
-					<div className="w-full max-w-2xl overflow-y-scroll">
-						<Suspense
-							fallback={
-								<div className="flex w-full flex-col gap-4">
-									<PostCardSkeleton />
-									<PostCardSkeleton />
-									<PostCardSkeleton />
-								</div>
-							}
-						>
-							<PostList />
-						</Suspense>
+						<h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">
+							Feather
+						</h1>
+
+						<p className="text-xl leading-relaxed text-muted-foreground">
+							A modern, full-stack Twitter clone built to explore scalable
+							architecture, real-time interactions, and clean domain-driven
+							design.
+						</p>
+
+						<p className="text-lg leading-relaxed text-muted-foreground">
+							Feather is a production-grade social platform powered by
+							end-to-end type safety, shared backend logic across web and mobile
+							clients, and infrastructure designed for extensibility.
+						</p>
+
+						<div className="pt-2 text-sm uppercase tracking-widest text-muted-foreground">
+							Launching Soon
+						</div>
+
+						<div className="pt-4 text-base">
+							<span className="text-muted-foreground">
+								In the meantime, follow development by watching the{" "}
+							</span>
+							<Link
+								href="https://github.com/cn-m/feather"
+								target="_blank"
+								className="font-medium underline underline-offset-4 hover:text-foreground"
+							>
+								GitHub repository
+							</Link>
+							.
+						</div>
+
+						<div className="pt-6 text-sm text-muted-foreground">
+							Built with Next.js, TypeScript, tRPC, Drizzle ORM, PostgreSQL,
+							TailwindCSS, Turborepo, and AWS.
+						</div>
 					</div>
 				</div>
-			</main>
-		</HydrateClient>
+			</div>
+		</main>
 	);
 }
