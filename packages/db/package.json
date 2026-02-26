@@ -27,7 +27,7 @@
 		"check:fix": "biome check --write",
 		"check:unsafe:fix": "biome check --write --unsafe",
 		"db:setup": "pnpm with-env tsx ./src/setup-db.ts",
-		"db:seed": "pnpm with-env tsx ./src/seed.ts",
+		"seed": "pnpm with-env tsx ./src/seed.ts",
 		"push": "pnpm with-env drizzle-kit push",
 		"studio": "pnpm with-env drizzle-kit studio",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",

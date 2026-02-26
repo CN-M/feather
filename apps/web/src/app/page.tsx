@@ -1,39 +1,38 @@
 import { Suspense } from "react";
 
 import { HydrateClient, prefetch, trpc } from "~/trpc/server";
-import { AuthShowcase } from "./_components/auth-showcase";
 import {
-	CreatePostForm,
-	PostCardSkeleton,
-	PostList,
-} from "./_components/posts";
+	CreateTweetForm,
+	TweetCardSkeleton,
+	TweetList,
+} from "./_components/tweets";
 
-export default function HomePage() {
-	prefetch(trpc.post.all.queryOptions());
+export default function TweetsPage() {
+	prefetch(trpc.tweet.all.queryOptions());
 
 	return (
 		<HydrateClient>
-			<main className="container h-screen py-16">
-				<div className="flex flex-col items-center justify-center gap-4">
-					<h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-						Create <span className="text-primary">T3</span> Turbo
-					</h1>
-					<AuthShowcase />
-
-					<CreatePostForm />
-					<div className="w-full max-w-2xl overflow-y-scroll">
-						<Suspense
-							fallback={
-								<div className="flex w-full flex-col gap-4">
-									<PostCardSkeleton />
-									<PostCardSkeleton />
-									<PostCardSkeleton />
-								</div>
-							}
-						>
-							<PostList />
-						</Suspense>
+			<main className="flex min-h-screen justify-center bg-background">
+				<div className="w-full max-w-2xl border-x border-border">
+					<div className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur px-4 py-4">
+						<h1 className="text-lg font-semibold">Home</h1>
 					</div>
+
+					<CreateTweetForm />
+
+					<Suspense
+						fallback={
+							<div className="flex flex-col">
+								<TweetCardSkeleton />
+								<TweetCardSkeleton />
+								<TweetCardSkeleton />
+								<TweetCardSkeleton />
+								<TweetCardSkeleton />
+							</div>
+						}
+					>
+						<TweetList />
+					</Suspense>
 				</div>
 			</main>
 		</HydrateClient>
