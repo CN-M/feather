@@ -23,3 +23,5 @@ export const CreatePostSchema = createInsertSchema(Post, {
 });
 
 export * from "./auth-schema";
+export * from "./tweet-schema";
+export * from "./user-schema";

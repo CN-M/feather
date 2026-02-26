@@ -1,5 +1,13 @@
 {
 	"extends": "@feather/tsconfig/compiled-package.json",
+	"compilerOptions": {
+		/** Emit types for internal packages to speed up editor performance. */
+		"declaration": false,
+		"declarationMap": false,
+		"emitDeclarationOnly": false,
+		"noEmit": false,
+		"outDir": "${configDir}/dist"
+	},
 	"include": ["src"],
 	"exclude": ["node_modules"]
 }

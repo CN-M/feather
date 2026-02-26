@@ -4,7 +4,7 @@
 
 @source "../../../../packages/ui/src/*.{ts,tsx}";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 @custom-variant light (&:where(.light, .light *));
 @custom-variant auto (&:where(.auto, .auto *));
 
@@ -20,10 +20,10 @@
 }
 
 @layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		letter-spacing: var(--tracking-normal);
-	}
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

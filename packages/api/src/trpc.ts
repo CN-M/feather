@@ -26,10 +26,21 @@ import { ZodError, z } from "zod/v4";
  * @see https://trpc.io/docs/server/context
  */
 
+// Explicitly type what you need from the session
+type Session = Awaited<ReturnType<Auth["api"]["getSession"]>>;
+
+// Explicitly type the context shape
+type TRPCContext = {
+	authApi: Auth["api"];
+	session: Session;
+	db: typeof db;
+};
+
 export const createTRPCContext = async (opts: {
 	headers: Headers;
 	auth: Auth;
-}) => {
+}): Promise<TRPCContext> => {
+	// <-- explicit return type annotation
 	const authApi = opts.auth.api;
 	const session = await authApi.getSession({
 		headers: opts.headers,

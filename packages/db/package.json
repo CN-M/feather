@@ -12,8 +12,8 @@
 			"default": "./src/client.ts"
 		},
 		"./schema": {
-			"types": "./dist/schema.d.ts",
-			"default": "./src/schema.ts"
+			"types": "./dist/schema/index.d.ts",
+			"default": "./src/schema/index.ts"
 		}
 	},
 	"license": "MIT",
@@ -26,7 +26,8 @@
 		"check": "biome check",
 		"check:fix": "biome check --write",
 		"check:unsafe:fix": "biome check --write --unsafe",
-		"setup:db": "pnpm with-env tsx ./src/setup-db.ts",
+		"db:setup": "pnpm with-env tsx ./src/setup-db.ts",
+		"db:seed": "pnpm with-env tsx ./src/seed.ts",
 		"push": "pnpm with-env drizzle-kit push",
 		"studio": "pnpm with-env drizzle-kit studio",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
@@ -42,6 +43,7 @@
 	},
 	"devDependencies": {
 		"@feather/tsconfig": "workspace:*",
+		"@types/node": "catalog:",
 		"drizzle-kit": "^0.31.5",
 		"typescript": "catalog:"
 	}
