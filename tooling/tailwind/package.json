@@ -22,13 +22,8 @@
 		"tailwindcss": "catalog:"
 	},
 	"devDependencies": {
-		"@feather/eslint-config": "workspace:*",
-		"@feather/prettier-config": "workspace:*",
 		"@feather/tsconfig": "workspace:*",
 		"@types/node": "catalog:",
-		"eslint": "catalog:",
-		"prettier": "catalog:",
 		"typescript": "catalog:"
-	},
-	"prettier": "@feather/prettier-config"
+	}
 }

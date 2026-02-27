@@ -31,24 +31,3 @@ pre-commit:
 
     - name: Check Types
       run: pnpm turbo run typecheck --filter='[HEAD]'
-
-          # - run: yarn eslint {staged_files}
-    #   glob: "*.{js,ts,jsx,tsx}"
-
-    # - name: rubocop
-    #   glob: "*.rb"
-    #   exclude:
-    #     - config/application.rb
-    #     - config/routes.rb
-    #   run: bundle exec rubocop --force-exclusion {all_files}
-
-    # - name: govet
-    #   files: git ls-files -m
-    #   glob: "*.go"
-    #   run: go vet {files}
-
-    # - script: "hello.js"
-    #   runner: node
-
-    # - script: "hello.go"
-    #   runner: go run
