@@ -16,4 +16,5 @@ export {
 	or,
 	sql,
 } from "drizzle-orm/sql";
+export type { DB } from "./client";
 export * from "./schema/index";

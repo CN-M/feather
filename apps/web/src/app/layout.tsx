@@ -3,17 +3,16 @@ import { ThemeProvider, ThemeToggle } from "@feather/ui/theme";
 import { Toaster } from "@feather/ui/toast";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
+import { AuthShowcase } from "./_components/auth-showcase";
 
 import "~/app/styles.css";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
 		env.VERCEL_ENV === "production"
-			? // ? "https://turbo.t3.gg"
-				"https://feather.mbhalati.com"
+			? "https://feather.mbhalati.com"
 			: "http://localhost:3000",
 	),
 	title: "Feather",
@@ -53,6 +52,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 				)}
 			>
 				<ThemeProvider>
+					<header className="flex w-full border-b py-4 px-10 justify-end">
+						<AuthShowcase />
+					</header>
 					<TRPCReactProvider>{props.children}</TRPCReactProvider>
 					<div className="absolute right-4 bottom-4">
 						<ThemeToggle />

@@ -23,6 +23,7 @@
 	"dependencies": {
 		"@feather/auth": "workspace:*",
 		"@feather/db": "workspace:*",
+		"@feather/domain": "workspace:*",
 		"@feather/validators": "workspace:*",
 		"@trpc/server": "catalog:",
 		"superjson": "2.2.3",

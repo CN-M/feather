@@ -10,3 +10,4 @@ const connectioString = env.POSTGRES_URL;
 const client = postgres(connectioString, { max: 1 });
 
 export const db = drizzle(client, { schema, casing: "snake_case" });
+export type DB = typeof db;
