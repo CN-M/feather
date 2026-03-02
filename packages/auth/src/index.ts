@@ -41,8 +41,8 @@ export function initAuth<
 			google: {
 				clientId: options.googleClientId,
 				clientSecret: options.googleClientSecret,
-				// redirectURI: `${options.productionUrl}/api/auth/callback/google`,
-				redirectURI: `http://localhost:3000/api/auth/callback/google`,
+				redirectURI: `${options.productionUrl}/api/auth/callback/google`,
+				// redirectURI: `http://localhost:3000/api/auth/callback/google`,
 			},
 		},
 		trustedOrigins: ["expo://"],
