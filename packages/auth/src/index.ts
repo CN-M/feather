@@ -42,6 +42,7 @@ export function initAuth<
 				clientId: options.googleClientId,
 				clientSecret: options.googleClientSecret,
 				redirectURI: `${options.productionUrl}/api/auth/callback/google`,
+				// redirectURI: `https://feather.mbhalati.com/api/auth/callback/google`,
 				// redirectURI: `http://localhost:3000/api/auth/callback/google`,
 			},
 		},
