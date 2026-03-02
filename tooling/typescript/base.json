@@ -20,7 +20,10 @@
 
 		"module": "Preserve",
 		"moduleResolution": "Bundler",
-		"noEmit": true
+		"noEmit": true,
+
+		"outDir": "${configDir}/dist",
+		"rootDir": "${configDir}/src"
 	},
 	"exclude": ["node_modules", "build", "dist", ".next", ".expo"]
 }
