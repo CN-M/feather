@@ -9,44 +9,44 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Repo & Tooling
 
-* [ ] Initialize repo using `create-t3-turbo`
-* [ ] Verify pnpm workspace setup
-* [ ] Clean unused packages / boilerplate
-* [ ] Commit initial scaffold
+* [X] Initialize repo using `create-t3-turbo`
+* [X] Verify pnpm workspace setup
+* [X] Clean unused packages / boilerplate
+* [X] Commit initial scaffold
 
 ### Environment & Config
 
-* [ ] Configure env validation
+* [X] Configure env validation
 * [ ] Set up SST project
 * [ ] Configure AWS credentials
-* [ ] Set up Postgres (local + prod)
-* [ ] Add Drizzle ORM
+* [X] Set up Postgres (local + prod)
+* [X] Add Drizzle ORM
 * [ ] Configure migrations
 
 ### Database Schema (Phase 1)
 
-* [ ] User table
-* [ ] Tweet table
-* [ ] Follow table
-* [ ] Like table
-* [ ] Add indexes (authorId, createdAt)
+* [X] User table
+* [X] Tweet table
+* [X] Follow table
+* [X] Like table
+* [X] Add indexes (authorId, createdAt)
 * [ ] Run first migration
-* [ ] Seed script (basic users)
+* [X] Seed script (basic users)
 
 ### Auth (Better Auth)
 
-* [ ] Configure Better Auth
-* [ ] Email/password auth
-* [ ] Session handling
-* [ ] Auth helpers (`requireUser`)
-* [ ] Protected tRPC context
+* [X] Configure Better Auth
+* [X] Email/password auth
+* [X] Session handling
+* [] Auth helpers (`requireUser`)
+* [] Protected tRPC context
 
 **End of Phase Check**
 
-* [ ] App runs locally
-* [ ] Auth works
-* [ ] DB connected
-* [ ] Can log in
+* [X] App runs locally
+* [X] Auth works
+* [X] DB connected
+* [X] Can log in
 
 ---
 
@@ -54,15 +54,15 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Domain Structure
 
-* [ ] Create `packages/domain`
-* [ ] Add `tweet` domain folder
+* [X] Create `packages/domain`
+* [X] Add `tweet` domain folder
 * [ ] Add `user` domain folder
 * [ ] Add `follow` domain folder
 
 ### Tweet Domain
 
-* [ ] `createTweet`
-* [ ] `deleteTweet`
+* [X] `createTweet`
+* [X] `deleteTweet`
 * [ ] `likeTweet`
 * [ ] `unlikeTweet`
 * [ ] Validation (length, ownership)
@@ -76,9 +76,10 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Timeline Queries
 
-* [ ] Global feed query
+* [X] Global feed query
+* [ ] Following feed query
 * [ ] Profile feed query
-* [ ] Cursor-based pagination
+* [X] Cursor-based pagination
 
 ### Guardrails
 
@@ -89,7 +90,7 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 **End of Phase Check**
 
 * [ ] Domain logic tested manually
-* [ ] No UI yet, just correctness
+* [X] No UI yet, just correctness
 * [ ] Domain layer has no Next.js imports
 
 ---
@@ -98,16 +99,16 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### tRPC Setup
 
-* [ ] Configure base tRPC router
-* [ ] Auth-aware context
+* [X] Configure base tRPC router
+* [X] Auth-aware context
 * [ ] Error handling strategy
 
 ### Tweet Router
 
-* [ ] `getGlobalFeed`
+* [X] `getGlobalFeed`
 * [ ] `getUserFeed`
-* [ ] `createTweet`
-* [ ] `deleteTweet`
+* [X] `createTweet`
+* [X] `deleteTweet`
 * [ ] `likeTweet`
 * [ ] `unlikeTweet`
 
@@ -148,16 +149,16 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Home Feed
 
-* [ ] Feed page
-* [ ] Infinite scroll
-* [ ] Loading skeletons
-* [ ] Empty state
+* [X] Feed page
+* [X] Infinite scroll
+* [X] Loading skeletons
+* [X] Empty state
 
 ### Tweet Interactions
 
-* [ ] Create tweet form
+* [X] Create tweet form
 * [ ] Like / unlike
-* [ ] Delete own tweet
+* [X] Delete own tweet
 * [ ] Optimistic updates
 
 ### Profile Page
@@ -186,11 +187,11 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Tooling Extras (Pick 2–3)
 
-* [ ] DB reset script
-* [ ] Seed users script
+* [X] DB reset script
+* [X] Seed users script
 * [ ] Simple Playwright test
-* [ ] Typed env validation
-* [ ] ESLint / formatting polish
+* [X] Typed env validation
+* [X] ESLint / formatting polish
 
 ### Deployment
 
@@ -201,13 +202,13 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Documentation
 
-* [ ] README overview
+* [X] README overview
 * [ ] Architecture diagram (text is fine)
-* [ ] Future extensibility section
-* [ ] CV-ready project description
+* [X] Future extensibility section
+* [X] CV-ready project description
 
 **End of Phase Check**
 
-* [ ] App is live
+* [X] App is live
 * [ ] README explains decisions
 * [ ] Scope stayed controlled
