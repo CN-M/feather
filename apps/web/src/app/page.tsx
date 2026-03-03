@@ -6,7 +6,7 @@ import {
 	TweetCardSkeleton,
 	TweetList,
 } from "./_components/tweets";
-import { WorkInProgressBanner } from "./_components/work-in-progress-banner.tsx";
+import { WorkInProgressBanner } from "./_components/work-in-progress-banner";
 
 export default function TweetsPage() {
 	prefetch(trpc.tweet.all.queryOptions());
@@ -25,11 +25,9 @@ export default function TweetsPage() {
 					<Suspense
 						fallback={
 							<div className="flex flex-col">
-								<TweetCardSkeleton />
-								<TweetCardSkeleton />
-								<TweetCardSkeleton />
-								<TweetCardSkeleton />
-								<TweetCardSkeleton />
+								{Array.from({ length: 5 }).map(() => (
+									<TweetCardSkeleton />
+								))}
 							</div>
 						}
 					>

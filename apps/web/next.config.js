@@ -18,6 +18,20 @@ const config = {
 
 	/** We already do linting and typechecking as separate tasks in CI */
 	typescript: { ignoreBuildErrors: true },
+	images: {
+		remotePatterns: [
+			{
+				hostname: "images.unsplash.com",
+			},
+			{
+				hostname: "api.dicebear.com",
+			},
+			{
+				hostname: "lh3.googleusercontent.com",
+			},
+			{ hostname: "googleusercontent.com" },
+		],
+	},
 };
 
 export default config;

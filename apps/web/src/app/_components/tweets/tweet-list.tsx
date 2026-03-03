@@ -1,14 +1,40 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { useTRPC } from "~/trpc/react";
-// import { TweetCard, TweetCardSkeleton } from "./tweet-card";
 import { TweetCard } from "./tweet-card";
 
 export function TweetList() {
 	const trpc = useTRPC();
-	const { data: tweets } = useSuspenseQuery(trpc.tweet.all.queryOptions());
+	const bottomRef = useRef<HTMLDivElement>(null);
+
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+		useInfiniteQuery(
+			trpc.tweet.all.infiniteQueryOptions(
+				{},
+				{
+					getNextPageParam: (lastPage) => lastPage.nextCursor,
+				},
+			),
+		);
+
+	const tweets = data?.pages.flatMap((page) => page.tweets) ?? [];
+
+	// Automatically fetch next page when bottom is visible
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0]?.isIntersecting && hasNextPage) {
+					fetchNextPage();
+				}
+			},
+			{ threshold: 0.1 },
+		);
+
+		if (bottomRef.current) observer.observe(bottomRef.current);
+		return () => observer.disconnect();
+	}, [fetchNextPage, hasNextPage]);
 
 	if (tweets.length === 0) {
 		return (
@@ -24,6 +50,16 @@ export function TweetList() {
 			{tweets.map((tweet) => (
 				<TweetCard key={tweet.id} tweet={tweet} />
 			))}
+			<div
+				ref={bottomRef}
+				className="py-4 text-center text-sm text-muted-foreground"
+			>
+				{isFetchingNextPage
+					? "Loading more..."
+					: hasNextPage
+						? ""
+						: "You're all caught up."}
+			</div>
 		</div>
 	);
 }

@@ -46,6 +46,9 @@
 		"clean": {
 			"cache": false
 		},
+		"clean:daemon": {
+			"cache": false
+		},
 		"//#clean": {
 			"cache": false
 		},
@@ -54,6 +57,10 @@
 			"interactive": true
 		},
 		"seed": {
+			"cache": false,
+			"interactive": true
+		},
+		"reset": {
 			"cache": false,
 			"interactive": true
 		},

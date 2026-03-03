@@ -34,6 +34,33 @@ export function CreateTweetForm() {
 						: "Failed to create tweet",
 				);
 			},
+			// onMutate: async ({ content }) => {
+			// 	await queryClient.cancelQueries(trpc.tweet.pathFilter());
+
+			// 	const prevTweets = queryClient.getQueryData(trpc.tweet.all.queryKey());
+
+			// 	queryClient.setQueryData(trpc.tweet.all.queryKey(), (prev) => {
+			// 		if (!prev) return prev;
+
+			// 		return [
+			// 			{
+			// 				id: `optimistic-${Date.now()}`,
+			// 				content: content,
+			// 				createdAt: new Date(),
+			// 				updatedAt: new Date(),
+			// 				user: {
+			// 					id: "me",
+			// 					name: "You",
+			// 				},
+			// 				optimistic: true,
+			// 				authorId: `optimistic-${Date.now()}`,
+			// 			},
+			// 			...prev,
+			// 		];
+			// 	});
+
+			// 	return { prevTweets };
+			// },
 		}),
 	);
 

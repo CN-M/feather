@@ -5,10 +5,12 @@ import { cn } from "@feather/ui";
 import { Button } from "@feather/ui/button";
 import { toast } from "@feather/ui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { authClient } from "~/auth/client";
 import { useTRPC } from "~/trpc/react";
 
-type Tweet = RouterOutputs["tweet"]["all"][number];
+type TweetPage = RouterOutputs["tweet"]["all"];
+type Tweet = TweetPage["tweets"][number];
 
 export function TweetCard({ tweet }: { tweet: Tweet }) {
 	const trpc = useTRPC();
@@ -30,15 +32,27 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 		}),
 	);
 
-	const isAuthor = session?.user.id === tweet.authorId;
+	const isAuthor = session?.user.id === tweet.author.id;
 
 	return (
 		<div className="group relative flex w-full gap-4 border-b border-border px-4 py-5 transition-colors hover:bg-muted/40">
 			{/* Avatar */}
 			<div className="shrink-0">
-				<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
-					{tweet.author?.name?.[0] ?? "U"}
-				</div>
+				{tweet.author.image ? (
+					<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
+						<Image
+							src={tweet.author.image}
+							fill
+							alt={tweet.author.name ?? "User avatar"}
+							className="object-cover"
+							unoptimized
+						/>
+					</div>
+				) : (
+					<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
+						{tweet.author.name?.[0] ?? "U"}
+					</div>
+				)}
 			</div>
 
 			{/* Content */}
@@ -46,7 +60,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 				{/* Header */}
 				<div className="flex items-center gap-2">
 					<span className="font-semibold text-sm">
-						{tweet.author?.name ?? "Unknown"}
+						{tweet.author.name ?? "Unknown"}
 					</span>
 					<span className="text-xs text-muted-foreground">
 						· {new Date(tweet.createdAt).toLocaleDateString()}
@@ -76,7 +90,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 						type="button"
 						className="hover:text-primary transition-colors"
 					>
-						❤️ {tweet.likes?.length ?? 0}
+						❤️ {tweet.likeCount ?? 0}
 					</button>
 				</div>
 			</div>
