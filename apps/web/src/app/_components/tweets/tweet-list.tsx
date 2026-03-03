@@ -1,6 +1,6 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useTRPC } from "~/trpc/react";
 import { TweetCard } from "./tweet-card";
@@ -10,7 +10,7 @@ export function TweetList() {
 	const bottomRef = useRef<HTMLDivElement>(null);
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-		useInfiniteQuery(
+		useSuspenseInfiniteQuery(
 			trpc.tweet.all.infiniteQueryOptions(
 				{},
 				{

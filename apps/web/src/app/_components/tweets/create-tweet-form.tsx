@@ -1,8 +1,6 @@
 "use client";
 
 import { Button } from "@feather/ui/button";
-// import { Field, FieldContent, FieldError, FieldLabel } from "@feather/ui/field";
-// import { Input } from "@feather/ui/input";
 import { toast } from "@feather/ui/toast";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -42,21 +40,20 @@ export function CreateTweetForm() {
 			// 	queryClient.setQueryData(trpc.tweet.all.queryKey(), (prev) => {
 			// 		if (!prev) return prev;
 
-			// 		return [
-			// 			{
-			// 				id: `optimistic-${Date.now()}`,
-			// 				content: content,
-			// 				createdAt: new Date(),
-			// 				updatedAt: new Date(),
-			// 				user: {
-			// 					id: "me",
-			// 					name: "You",
+			// 		return {
+			// 			tweets: [
+			// 				{
+			// 					id: `optimistic-${Date.now()}`,
+			// 					content: content,
+			// 					createdAt: new Date(),
+			// 					updatedAt: new Date(),
+			// 					author: {
+			// 					}
 			// 				},
-			// 				optimistic: true,
-			// 				authorId: `optimistic-${Date.now()}`,
-			// 			},
-			// 			...prev,
-			// 		];
+			// 				...prev,
+			// 			],
+			// 			nextCursor: null,
+			// 		};
 			// 	});
 
 			// 	return { prevTweets };
