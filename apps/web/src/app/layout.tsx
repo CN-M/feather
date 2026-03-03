@@ -51,9 +51,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 				<ThemeProvider>
 					<WorkInProgressBanner />
 					<Header />
-					{/* <header className="flex w-full border-b py-4 px-10 justify-end">
-						<AuthShowcase />
-					</header> */}
 					<TRPCReactProvider>{props.children}</TRPCReactProvider>
 					<div className="absolute right-4 bottom-4">
 						<ThemeToggle />

@@ -44,13 +44,11 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 
 	return (
 		<div className="relative" ref={ref}>
-			{/* Trigger */}
 			<button
 				type="button"
 				onClick={() => setOpen((o) => !o)}
 				className="flex items-center gap-3 rounded-full px-2 py-1.5 transition-colors hover:bg-muted cursor-pointer"
 			>
-				{/* Avatar */}
 				<div className="relative h-9 w-9 overflow-hidden rounded-full border border-border bg-muted">
 					{image ? (
 						<Image
@@ -67,7 +65,6 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 					)}
 				</div>
 
-				{/* Name */}
 				<div className="hidden text-left sm:block">
 					<p className="text-sm font-medium leading-tight text-foreground">
 						{name}
@@ -77,7 +74,6 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 					</p>
 				</div>
 
-				{/* Chevron */}
 				<svg
 					className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${
 						open ? "rotate-180" : ""
@@ -96,10 +92,8 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 				</svg>
 			</button>
 
-			{/* Dropdown */}
 			{open && (
 				<div className="absolute right-0 top-full z-50 mt-2 w-64 animate-in fade-in-0 zoom-in-95 overflow-hidden rounded-xl border border-border bg-popover shadow-lg">
-					{/* User header */}
 					<div className="px-4 py-3">
 						<p className="text-sm font-semibold text-foreground truncate">
 							{name}
@@ -109,7 +103,6 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 
 					<div className="h-px bg-border" />
 
-					{/* Menu items */}
 					<div className="p-1">
 						<button
 							type="button"

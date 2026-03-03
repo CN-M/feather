@@ -18,7 +18,6 @@ export function AuthCard() {
 	return (
 		<div className="w-full">
 			<div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-				{/* Header */}
 				<div className="space-y-2 text-center">
 					<h1 className="text-xl font-light tracking-tight">
 						Sign in to Feather
@@ -28,10 +27,8 @@ export function AuthCard() {
 					</p>
 				</div>
 
-				{/* Divider */}
 				<div className="my-6 h-px bg-border" />
 
-				{/* Google Button */}
 				<button
 					type="button"
 					onClick={handleGoogleSignIn}

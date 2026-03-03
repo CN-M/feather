@@ -8,7 +8,6 @@ export async function Header() {
 	return (
 		<header className="sticky top-0 z-50 border-b border-white/6 bg-black/80 backdrop-blur-md">
 			<div className="container flex h-14 items-center justify-between">
-				{/* Logo */}
 				<Link
 					href="/"
 					className="text-2xl font-light text-white transition-opacity hover:opacity-70"
@@ -16,7 +15,6 @@ export async function Header() {
 					Feather
 				</Link>
 
-				{/* Nav */}
 				<nav className="flex items-center gap-1">
 					{session ? (
 						<UserMenu

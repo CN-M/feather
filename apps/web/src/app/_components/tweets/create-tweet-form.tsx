@@ -97,15 +97,6 @@ export function CreateTweetForm() {
 			}}
 		>
 			<div className="flex gap-4">
-				{/* Avatar */}
-				{/* <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
-					{userAvatar ? (
-						<img src={userAvatar} alt={`${userName}`} />
-					) : (
-						<span>Y</span>
-					)}
-				</div> */}
-
 				<div className="shrink-0">
 					{userAvatar ? (
 						<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">

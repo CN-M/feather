@@ -36,7 +36,6 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 
 	return (
 		<div className="group relative flex w-full gap-4 border-b border-border px-4 py-5 transition-colors hover:bg-muted/40">
-			{/* Avatar */}
 			<div className="shrink-0">
 				{tweet.author.image ? (
 					<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
@@ -55,9 +54,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 				)}
 			</div>
 
-			{/* Content */}
 			<div className="flex w-full flex-col">
-				{/* Header */}
 				<div className="flex items-center gap-2">
 					<span className="font-semibold text-sm">
 						{tweet.author.name ?? "Unknown"}
