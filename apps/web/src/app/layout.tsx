@@ -2,12 +2,13 @@ import { cn } from "@feather/ui";
 import { ThemeProvider, ThemeToggle } from "@feather/ui/theme";
 import { Toaster } from "@feather/ui/toast";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
-import { AuthShowcase } from "./_components/auth-showcase";
+import { WorkInProgressBanner } from "./_components/work-in-progress-banner";
 
 import "~/app/styles.css";
+import { Header } from "./_components/header";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -32,13 +33,10 @@ export const viewport: Viewport = {
 	],
 };
 
-const geistSans = Geist({
+const montserrat = Montserrat({
 	subsets: ["latin"],
-	variable: "--font-geist-sans",
-});
-const geistMono = Geist_Mono({
-	subsets: ["latin"],
-	variable: "--font-geist-mono",
+	variable: "--font-montserrat",
+	preload: true,
 });
 
 export default function RootLayout(props: { children: React.ReactNode }) {
@@ -46,15 +44,16 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={cn(
-					"bg-background text-foreground min-h-screen font-sans antialiased",
-					geistSans.variable,
-					geistMono.variable,
+					"bg-background text-foreground min-h-screen font-montserrat antialiased",
+					montserrat.variable,
 				)}
 			>
 				<ThemeProvider>
-					<header className="flex w-full border-b py-4 px-10 justify-end">
+					<WorkInProgressBanner />
+					<Header />
+					{/* <header className="flex w-full border-b py-4 px-10 justify-end">
 						<AuthShowcase />
-					</header>
+					</header> */}
 					<TRPCReactProvider>{props.children}</TRPCReactProvider>
 					<div className="absolute right-4 bottom-4">
 						<ThemeToggle />

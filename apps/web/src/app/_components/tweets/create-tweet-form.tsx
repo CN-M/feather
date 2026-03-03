@@ -4,7 +4,10 @@ import { Button } from "@feather/ui/button";
 import { toast } from "@feather/ui/toast";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { z } from "zod";
+import { authClient } from "~/auth/client";
 
 import { useTRPC } from "~/trpc/react";
 
@@ -16,6 +19,20 @@ const CreateTweetSchema = z.object({
 });
 
 export function CreateTweetForm() {
+	const [userAvatar, setUserAvatar] = useState<null | string>(null);
+	const [userName, setUserName] = useState<null | string>(null);
+
+	useEffect(() => {
+		const getUserAvatar = async () => {
+			const { data } = await authClient.getSession();
+
+			if (data?.user.image) setUserAvatar(data?.user.image);
+			if (data?.user.name) setUserName(data?.user.name);
+		};
+
+		getUserAvatar();
+	});
+
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 
@@ -81,8 +98,30 @@ export function CreateTweetForm() {
 		>
 			<div className="flex gap-4">
 				{/* Avatar */}
-				<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
-					Y
+				{/* <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
+					{userAvatar ? (
+						<img src={userAvatar} alt={`${userName}`} />
+					) : (
+						<span>Y</span>
+					)}
+				</div> */}
+
+				<div className="shrink-0">
+					{userAvatar ? (
+						<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
+							<Image
+								src={userAvatar}
+								fill
+								alt={userName ?? "User avatar"}
+								className="object-cover"
+								sizes="40px"
+							/>
+						</div>
+					) : (
+						<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
+							{userName?.[0] ?? "U"}
+						</div>
+					)}
 				</div>
 
 				<div className="flex w-full flex-col">
