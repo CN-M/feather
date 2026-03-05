@@ -56,22 +56,21 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 * [X] Create `packages/domain`
 * [X] Add `tweet` domain folder
-* [ ] Add `user` domain folder
-* [ ] Add `follow` domain folder
+* [X] Add `user` domain folder
 
 ### Tweet Domain
 
 * [X] `createTweet`
 * [X] `deleteTweet`
-* [ ] `likeTweet`
-* [ ] `unlikeTweet`
+* [X] `likeTweet`
+* [X] `unlikeTweet`
 * [ ] Validation (length, ownership)
 
 ### User / Follow Domain
 
-* [ ] `followUser`
-* [ ] `unfollowUser`
-* [ ] `getUserProfile`
+* [X] `followUser`
+* [X] `unfollowUser`
+* [X] `getUserProfile`
 * [ ] `getFollowerCounts`
 
 ### Timeline Queries
@@ -109,14 +108,14 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 * [ ] `getUserFeed`
 * [X] `createTweet`
 * [X] `deleteTweet`
-* [ ] `likeTweet`
-* [ ] `unlikeTweet`
+* [x] `likeTweet`
+* [x] `unlikeTweet`
 
 ### User / Follow Router
 
-* [ ] `getProfile`
-* [ ] `followUser`
-* [ ] `unfollowUser`
+* [X] `getProfile`
+* [X] `followUser`
+* [X] `unfollowUser`
 * [ ] `getFollowerCounts`
 
 ### Validation

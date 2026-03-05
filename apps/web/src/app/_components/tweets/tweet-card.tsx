@@ -6,6 +6,7 @@ import { Button } from "@feather/ui/button";
 import { toast } from "@feather/ui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { authClient } from "~/auth/client";
 import { useTRPC } from "~/trpc/react";
 
@@ -37,28 +38,32 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 	return (
 		<div className="group relative flex w-full gap-4 border-b border-border px-4 py-5 transition-colors hover:bg-muted/40">
 			<div className="shrink-0">
-				{tweet.author.image ? (
-					<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
-						<Image
-							src={tweet.author.image}
-							fill
-							alt={tweet.author.name ?? "User avatar"}
-							className="object-cover"
-							unoptimized
-						/>
-					</div>
-				) : (
-					<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
-						{tweet.author.name?.[0] ?? "U"}
-					</div>
-				)}
+				<Link href={`/${tweet.author.id}`}>
+					{tweet.author.image ? (
+						<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
+							<Image
+								src={tweet.author.image}
+								fill
+								alt={tweet.author.name ?? "User avatar"}
+								className="object-cover"
+								unoptimized
+							/>
+						</div>
+					) : (
+						<div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-sm font-semibold text-primary">
+							{tweet.author.name?.[0] ?? "U"}
+						</div>
+					)}
+				</Link>
 			</div>
 
 			<div className="flex w-full flex-col">
 				<div className="flex items-center gap-2">
-					<span className="font-semibold text-sm">
-						{tweet.author.name ?? "Unknown"}
-					</span>
+					<Link href={`/${tweet.author.id}`}>
+						<span className="font-semibold text-sm">
+							{tweet.author.name ?? "Unknown"}
+						</span>
+					</Link>
 					<span className="text-xs text-muted-foreground">
 						· {new Date(tweet.createdAt).toLocaleDateString()}
 					</span>

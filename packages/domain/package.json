@@ -10,6 +10,10 @@
 		"./tweet": {
 			"types": "./dist/tweet/index.d.ts",
 			"default": "./src/tweet/index.ts"
+		},
+		"./user": {
+			"types": "./dist/user/index.d.ts",
+			"default": "./src/user/index.ts"
 		}
 	},
 	"license": "MIT",
