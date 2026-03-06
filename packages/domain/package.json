@@ -21,6 +21,8 @@
 		"build": "tsc",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"dev": "tsc",
+		"test": "vitest",
+		"test:run": "vitest run",
 		"lint": "biome lint",
 		"format": "biome format",
 		"check": "biome check",
@@ -36,6 +38,7 @@
 	"devDependencies": {
 		"@feather/tsconfig": "workspace:*",
 		"@types/node": "catalog:",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"vitest": "^4.0.18"
 	}
 }

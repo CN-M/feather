@@ -38,7 +38,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 	return (
 		<div className="group relative flex w-full gap-4 border-b border-border px-4 py-5 transition-colors hover:bg-muted/40">
 			<div className="shrink-0">
-				<Link href={`/${tweet.author.id}`}>
+				<Link href={`/${tweet.author.id}`} prefetch>
 					{tweet.author.image ? (
 						<div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/10">
 							<Image
@@ -59,7 +59,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 
 			<div className="flex w-full flex-col">
 				<div className="flex items-center gap-2">
-					<Link href={`/${tweet.author.id}`}>
+					<Link href={`/${tweet.author.id}`} prefetch>
 						<span className="font-semibold text-sm">
 							{tweet.author.name ?? "Unknown"}
 						</span>
