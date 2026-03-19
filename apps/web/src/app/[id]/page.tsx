@@ -1,8 +1,6 @@
-// import { useQuery } from "@tanstack/react-query";
 import { HydrateClient, prefetch, trpc } from "~/trpc/server";
 import { ProfileView } from "../_components/profile/profile-view";
 
-// export default async function ProfilePage({
 export default async function ProfilePage({
 	params,
 }: {
@@ -10,14 +8,15 @@ export default async function ProfilePage({
 }) {
 	const { id } = await params;
 
-	prefetch(trpc.user.profile.queryOptions({ userId: id }));
-	prefetch(trpc.tweet.profileFeed.queryOptions({ id: id }));
-	prefetch(trpc.tweet.profileLikeFeed.queryOptions({ id: id }));
+	await Promise.all([
+		prefetch(trpc.user.profile.queryOptions({ profileId: id })),
+		prefetch(trpc.tweet.profileFeed.queryOptions({ profileId: id })),
+		prefetch(trpc.tweet.profileLikeFeed.queryOptions({ profileId: id })),
+	]);
 
 	return (
 		<HydrateClient>
-			{/* <ProfileView user={user} /> */}
-			<ProfileView userId={id} />
+			<ProfileView profileId={id} />
 		</HydrateClient>
 	);
 }

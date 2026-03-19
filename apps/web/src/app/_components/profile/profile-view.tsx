@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@feather/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@feather/ui/tabs";
 import {
 	useSuspenseInfiniteQuery,
@@ -11,14 +12,15 @@ import { useTRPC } from "~/trpc/react";
 import { TweetCard } from "../tweets/tweet-card";
 import { FollowButton } from "./follow-button";
 
-export const ProfileView = ({ userId }: { userId: string }) => {
+export const ProfileView = ({ profileId }: { profileId: string }) => {
 	const trpc = useTRPC();
 	const bottomPostsRef = useRef<HTMLDivElement>(null);
 	const bottomLikesRef = useRef<HTMLDivElement>(null);
 
 	const { data: session } = authClient.useSession();
+
 	const { data: user } = useSuspenseQuery(
-		trpc.user.profile.queryOptions({ userId }),
+		trpc.user.profile.queryOptions({ profileId }),
 	);
 
 	const {
@@ -28,7 +30,8 @@ export const ProfileView = ({ userId }: { userId: string }) => {
 		isFetchingNextPage: isFetchingNextPosts,
 	} = useSuspenseInfiniteQuery(
 		trpc.tweet.profileFeed.infiniteQueryOptions(
-			{ id: user.id },
+			// { profileId: user.id },
+			{ profileId },
 			{ getNextPageParam: (lastPage) => lastPage.nextCursor },
 		),
 	);
@@ -40,7 +43,7 @@ export const ProfileView = ({ userId }: { userId: string }) => {
 		isFetchingNextPage: isFetchingNextLikes,
 	} = useSuspenseInfiniteQuery(
 		trpc.tweet.profileLikeFeed.infiniteQueryOptions(
-			{ id: user.id },
+			{ profileId },
 			{ getNextPageParam: (lastPage) => lastPage.nextCursor },
 		),
 	);
@@ -89,9 +92,7 @@ export const ProfileView = ({ userId }: { userId: string }) => {
 							</div>
 						</div>
 
-						<Suspense
-							fallback={<div className="flex flex-col">loading...</div>}
-						>
+						<Suspense fallback={<Skeleton className="h-8 w-25" />}>
 							{followerId && followerId !== user.id ? (
 								<FollowButton followingId={user.id} followerId={followerId} />
 							) : null}

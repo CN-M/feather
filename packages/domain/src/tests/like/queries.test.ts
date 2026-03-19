@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { getTweetsLikedByUser } from "../../tweet/queries";
+import { getTweetsLikedByProfile } from "../../tweet/queries";
 import { createMockDb, type MockDb } from "../mock-db";
 
 const makeMockLikeWithTweet = (overrides = {}) => ({
@@ -17,7 +17,7 @@ const makeMockLikeWithTweet = (overrides = {}) => ({
 	...overrides,
 });
 
-describe("getTweetsLikedByUser", () => {
+describe("getTweetsLikedByProfile", () => {
 	let db: MockDb;
 
 	beforeEach(() => {
@@ -27,7 +27,7 @@ describe("getTweetsLikedByUser", () => {
 	it("returns empty tweets and null cursor when user has no likes", async () => {
 		db.query.like.findMany.mockResolvedValue([]);
 
-		const result = await getTweetsLikedByUser(db, "user-1");
+		const result = await getTweetsLikedByProfile(db, "user-1");
 
 		expect(result.tweets).toHaveLength(0);
 		expect(result.nextCursor).toBeNull();
@@ -47,7 +47,7 @@ describe("getTweetsLikedByUser", () => {
 		];
 		db.query.like.findMany.mockResolvedValue(mockLikes);
 
-		const result = await getTweetsLikedByUser(db, "user-1");
+		const result = await getTweetsLikedByProfile(db, "user-1");
 
 		expect(result.tweets).toHaveLength(1);
 		expect(result.tweets[0]?.likeCount).toBe(2);
@@ -69,7 +69,7 @@ describe("getTweetsLikedByUser", () => {
 		);
 		db.query.like.findMany.mockResolvedValue(mockLikes);
 
-		const result = await getTweetsLikedByUser(db, "user-1");
+		const result = await getTweetsLikedByProfile(db, "user-1");
 
 		expect(result.nextCursor).toEqual(lastDate);
 	});
@@ -77,7 +77,7 @@ describe("getTweetsLikedByUser", () => {
 	it("returns null cursor when fewer than 20 results", async () => {
 		db.query.like.findMany.mockResolvedValue([makeMockLikeWithTweet()]);
 
-		const result = await getTweetsLikedByUser(db, "user-1");
+		const result = await getTweetsLikedByProfile(db, "user-1");
 
 		expect(result.nextCursor).toBeNull();
 	});
@@ -99,7 +99,7 @@ describe("getTweetsLikedByUser", () => {
 			}),
 		]);
 
-		const result = await getTweetsLikedByUser(db, "user-1");
+		const result = await getTweetsLikedByProfile(db, "user-1");
 
 		expect(result.tweets[0]?.author.name).toBe("Bob");
 		expect(result.tweets[0]?.author.image).toBe(

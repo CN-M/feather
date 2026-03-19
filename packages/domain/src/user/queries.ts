@@ -1,28 +1,43 @@
-import { and, type DB, eq, or, sql } from "@feather/db";
+import { alias, and, type DB, eq, sql } from "@feather/db";
 import { follow, user } from "@feather/db/schema";
 
-export async function getUserProfileById(db: DB, userId: string) {
+const following = alias(follow, "following");
+const followers = alias(follow, "followers");
+const myFollow = alias(follow, "myFollow");
+
+export async function getProfileById(
+	db: DB,
+	profileId: string,
+	userId?: string,
+) {
 	const [profile] = await db
 		.select({
 			id: user.id,
 			name: user.name,
 			image: user.image,
-			followingCount:
-				sql<number>`count(distinct case when ${follow.followerId} = ${userId} then ${follow.id} end)`.mapWith(
-					Number,
-				),
-			followerCount:
-				sql<number>`count(distinct case when ${follow.followingId} = ${userId} then ${follow.id} end)`.mapWith(
-					Number,
-				),
+			followingCount: sql<number>`count(distinct ${following.id})`.mapWith(
+				Number,
+			),
+			followerCount: sql<number>`count(distinct ${followers.id})`.mapWith(
+				Number,
+			),
+			isFollowing: sql<boolean>`bool_or(${myFollow.id} is not null)`.mapWith(
+				Boolean,
+			),
 		})
 		.from(user)
+		.leftJoin(following, eq(following.followerId, profileId))
+		.leftJoin(followers, eq(followers.followingId, profileId))
 		.leftJoin(
-			follow,
-			or(eq(follow.followingId, userId), eq(follow.followerId, userId)),
+			myFollow,
+			and(
+				eq(myFollow.followerId, userId ?? ""),
+				eq(myFollow.followingId, profileId),
+			),
 		)
-		.where(eq(user.id, userId))
-		.groupBy(user.id);
+		.where(eq(user.id, profileId))
+		.groupBy(user.id)
+		.limit(1);
 
 	return profile;
 }
@@ -51,12 +66,3 @@ export async function isFollowing(
 		isFollowing: !!result,
 	};
 }
-
-// export async function getUserProfileByIdd(db: DB, userId: string) {
-// 	const [profile] = await db
-// 		.select({ id: user.id, name: user.name, image: user.image })
-// 		.from(user)
-// 		.where(eq(user.id, userId));
-
-// 	return profile;
-// }

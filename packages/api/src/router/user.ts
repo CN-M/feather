@@ -1,8 +1,8 @@
-import { getTweetsLikedByUser } from "@feather/domain/tweet";
+import { getTweetsLikedByProfile } from "@feather/domain/tweet";
 import {
 	createFollow,
 	deleteFollow,
-	getUserProfileById,
+	getProfileById,
 	isFollowing,
 } from "@feather/domain/user";
 import { TRPCError, type TRPCRouterRecord } from "@trpc/server";
@@ -11,17 +11,26 @@ import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const userRouter = {
 	profile: publicProcedure
-		.input(z.object({ userId: z.string() }))
-		.query(async ({ ctx, input: { userId } }) => {
-			const profile = await getUserProfileById(ctx.db, userId);
+		.input(z.object({ profileId: z.string() }))
+		.query(async ({ ctx, input: { profileId } }) => {
+			const profile = await getProfileById(
+				ctx.db,
+				profileId,
+				ctx.session?.user.id,
+			);
 			if (!profile) throw new TRPCError({ code: "NOT_FOUND" });
 			return profile;
 		}),
 
 	profileLikes: publicProcedure
-		.input(z.object({ userId: z.string() }))
-		.query(({ ctx, input: { userId } }) => {
-			return getTweetsLikedByUser(ctx.db, userId);
+		.input(z.object({ profileId: z.string(), cursor: z.date().optional() }))
+		.query(({ ctx, input: { profileId, cursor } }) => {
+			return getTweetsLikedByProfile(
+				ctx.db,
+				profileId,
+				ctx.session?.user.id,
+				cursor,
+			);
 		}),
 
 	isFollowing: protectedProcedure

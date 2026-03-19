@@ -12,7 +12,8 @@
 		"./separator": "./src/separator.tsx",
 		"./theme": "./src/theme.tsx",
 		"./toast": "./src/toast.tsx",
-		"./tabs": "./src/tabs.tsx"
+		"./tabs": "./src/tabs.tsx",
+		"./skeleton": "./src/skeleton.tsx"
 	},
 	"license": "MIT",
 	"scripts": {

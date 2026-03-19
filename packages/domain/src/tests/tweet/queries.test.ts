@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
 	getAllTweets,
+	getProfileFeedbyId,
 	getTweetById,
-	getUserProfileFeedbyId,
 } from "../../tweet/queries";
 import { createMockDb, type MockDb, makeMockTweet } from "../mock-db";
 
@@ -60,7 +60,7 @@ describe("getAllTweets", () => {
 		db.limit.mockResolvedValue([]);
 		const cursor = new Date("2024-01-01T00:00:00Z");
 
-		await getAllTweets(db, cursor);
+		await getAllTweets(db, "", cursor);
 
 		expect(db.where).toHaveBeenCalled();
 	});
@@ -95,7 +95,7 @@ describe("getTweetById", () => {
 			content: "Hello world",
 			createdAt: new Date(),
 			author: { id: "user-1", name: "Alice", image: null },
-			likes: [{ id: "like-1", userId: "user-2", tweetId: "tweet-1" }],
+			likeCount: 1,
 		};
 		db.query.tweet.findFirst.mockResolvedValue(mockTweet);
 
@@ -103,7 +103,7 @@ describe("getTweetById", () => {
 
 		expect(result).toEqual(mockTweet);
 		expect(result?.author.name).toBe("Alice");
-		expect(result?.likes).toHaveLength(1);
+		expect(result?.likeCount).toBe(1);
 	});
 
 	it("calls findFirst with correct tweet id", async () => {
@@ -113,7 +113,7 @@ describe("getTweetById", () => {
 	});
 });
 
-describe("getUserProfileFeedbyId", () => {
+describe("getProfileFeedbyId", () => {
 	let db: MockDb;
 
 	beforeEach(() => {
@@ -123,7 +123,7 @@ describe("getUserProfileFeedbyId", () => {
 	it("returns empty tweets and null cursor when user has no tweets", async () => {
 		db.limit.mockResolvedValue([]);
 
-		const result = await getUserProfileFeedbyId(db, "user-1");
+		const result = await getProfileFeedbyId(db, "user-1");
 
 		expect(result.tweets).toHaveLength(0);
 		expect(result.nextCursor).toBeNull();
@@ -136,7 +136,7 @@ describe("getUserProfileFeedbyId", () => {
 		];
 		db.limit.mockResolvedValue(mockTweets);
 
-		const result = await getUserProfileFeedbyId(db, "user-1");
+		const result = await getProfileFeedbyId(db, "user-1");
 
 		expect(result.tweets).toHaveLength(2);
 	});
@@ -148,7 +148,7 @@ describe("getUserProfileFeedbyId", () => {
 		);
 		db.limit.mockResolvedValue(mockTweets);
 
-		const result = await getUserProfileFeedbyId(db, "user-1");
+		const result = await getProfileFeedbyId(db, "user-1");
 
 		expect(result.nextCursor).toEqual(lastDate);
 	});
@@ -158,7 +158,7 @@ describe("getUserProfileFeedbyId", () => {
 			Array.from({ length: 3 }, () => makeMockTweet()),
 		);
 
-		const result = await getUserProfileFeedbyId(db, "user-1");
+		const result = await getProfileFeedbyId(db, "user-1");
 
 		expect(result.nextCursor).toBeNull();
 	});
