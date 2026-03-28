@@ -71,26 +71,26 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 * [X] `followUser`
 * [X] `unfollowUser`
 * [X] `getUserProfile`
-* [ ] `getFollowerCounts`
+* [X] `getFollowerCounts`
 
 ### Timeline Queries
 
 * [X] Global feed query
 * [ ] Following feed query
-* [ ] Profile feed query
+* [X] Profile feed query
 * [X] Cursor-based pagination
 
 ### Guardrails
 
 * [ ] Ownership checks
 * [ ] Duplicate like protection
-* [ ] Follow self prevention
+* [X] Follow self prevention
 
 **End of Phase Check**
 
-* [ ] Domain logic tested manually
+* [X] Domain logic tested manually
 * [X] No UI yet, just correctness
-* [ ] Domain layer has no Next.js imports
+* [X] Domain layer has no Next.js imports
 
 ---
 
@@ -116,13 +116,13 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 * [X] `getProfile`
 * [X] `followUser`
 * [X] `unfollowUser`
-* [ ] `getFollowerCounts`
+* [X] `getFollowerCounts`
 
 ### Validation
 
 * [ ] Zod input schemas
 * [ ] Cursor types
-* [ ] Protected procedures
+* [X] Protected procedures
 
 ### API Stability
 
@@ -132,8 +132,8 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 **End of Phase Check**
 
 * [ ] tRPC calls work via playground
-* [ ] Auth enforcement works
-* [ ] Pagination works
+* [x] Auth enforcement works
+* [x] Pagination works
 
 ---
 
@@ -141,10 +141,10 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Layout & Navigation
 
-* [ ] App layout shell
+* [x] App layout shell
 * [ ] Auth-protected routes
-* [ ] Header / nav
-* [ ] Mobile responsiveness
+* [x] Header / nav
+* [x] Mobile responsiveness
 
 ### Home Feed
 
@@ -162,10 +162,10 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 
 ### Profile Page
 
-* [ ] Profile header
-* [ ] Follow / unfollow button
-* [ ] Profile feed
-* [ ] Follower counts
+* [X] Profile header
+* [X] Follow / unfollow button
+* [X] Profile feed
+* [X] Follower counts
 
 **End of Phase Check**
 

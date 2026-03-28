@@ -1,17 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "~/auth/client";
 
 type UserMenuProps = {
+	id: string;
 	name: string;
 	email: string;
 	image?: string | null;
 };
 
-export function UserMenu({ name, email, image }: UserMenuProps) {
+export function UserMenu({ id, name, email, image }: UserMenuProps) {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
@@ -94,12 +96,14 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
 
 			{open && (
 				<div className="absolute right-0 top-full z-50 mt-2 w-64 animate-in fade-in-0 zoom-in-95 overflow-hidden rounded-xl border border-border bg-popover shadow-lg">
-					<div className="px-4 py-3">
-						<p className="text-sm font-semibold text-foreground truncate">
-							{name}
-						</p>
-						<p className="text-xs text-muted-foreground truncate">{email}</p>
-					</div>
+					<Link href={`/${id}`}>
+						<div className="px-4 py-3">
+							<p className="text-sm font-semibold text-foreground truncate">
+								{name}
+							</p>
+							<p className="text-xs text-muted-foreground truncate">{email}</p>
+						</div>
+					</Link>
 
 					<div className="h-px bg-border" />
 

@@ -15,9 +15,9 @@ import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const tweetRouter = {
 	all: publicProcedure
-		// .input(z.object({ cursor: z.date().optional() }).optional())
 		.input(z.object({ cursor: z.date().optional() }))
 		.query(({ ctx, input: { cursor } }) => {
+			console.log({ session: ctx.session?.user.id });
 			return getAllTweets(ctx.db, ctx.session?.user.id, cursor);
 		}),
 
@@ -62,7 +62,7 @@ export const tweetRouter = {
 		}),
 
 	unlike: protectedProcedure
-		.input(z.object({ likeId: z.string(), userId: z.string() }))
+		.input(z.object({ tweetId: z.string(), userId: z.string() }))
 		.mutation(({ ctx, input }) => {
 			return unlikeTweet(ctx.db, input);
 		}),

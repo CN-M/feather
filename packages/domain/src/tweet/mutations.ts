@@ -1,4 +1,4 @@
-import { type DB, eq } from "@feather/db";
+import { and, type DB, eq } from "@feather/db";
 import { like, tweet } from "@feather/db/schema";
 import type { CreateTweetInput } from "./schemas";
 
@@ -35,10 +35,15 @@ export const likeTweet = async (
 		});
 };
 
-export async function unlikeTweet(db: DB, input: { likeId: string }) {
-	const { likeId } = input;
+// export async function unlikeTweet(db: DB, input: { likeId: string }) {
+export async function unlikeTweet(
+	db: DB,
+	input: { tweetId: string; userId: string },
+) {
+	const { tweetId, userId } = input;
+
 	return db
 		.delete(like)
-		.where(eq(like.id, likeId))
+		.where(and(eq(like.tweetId, tweetId), eq(like.userId, userId)))
 		.returning({ id: like.id, tweetId: like.tweetId, userId: like.userId });
 }

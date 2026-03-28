@@ -18,6 +18,7 @@ export async function Header() {
 				<nav className="flex items-center gap-1">
 					{session ? (
 						<UserMenu
+							id={session.user.id}
 							name={session.user.name}
 							email={session.user.email}
 							image={session.user.image}

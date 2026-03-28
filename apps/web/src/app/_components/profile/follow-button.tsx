@@ -1,7 +1,6 @@
 import { toast } from "@feather/ui/toast";
 import {
 	useMutation,
-	useQuery,
 	useQueryClient,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
@@ -73,7 +72,7 @@ export const FollowButton = ({
 				toast.error(
 					err.data?.code === "UNAUTHORIZED"
 						? "You must be logged in to follow someone"
-						: "Failed to create tweet",
+						: "Error following user",
 				);
 			},
 		}),
@@ -86,16 +85,18 @@ export const FollowButton = ({
 					type="button"
 					onClick={() => unfollow.mutate({ followId: followId.id })}
 					className="rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted cursor-pointer"
+					disabled={unfollow.isPending}
 				>
-					Unfollow
+					{unfollow.isPending ? "Unfollowing..." : "Unfollow"}
 				</button>
 			) : (
 				<button
 					type="button"
 					onClick={() => follow.mutate({ followerId, followingId })}
 					className="rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted cursor-pointer"
+					disabled={follow.isPending}
 				>
-					Follow
+					{follow.isPending ? "Following..." : "Follow"}
 				</button>
 			)}
 		</>

@@ -8,7 +8,12 @@ import {
 } from "./_components/tweets";
 
 export default function TweetsPage() {
-	prefetch(trpc.tweet.all.queryOptions({}));
+	prefetch(
+		trpc.tweet.all.infiniteQueryOptions(
+			{},
+			{ getNextPageParam: (lastPage) => lastPage.nextCursor },
+		),
+	);
 
 	return (
 		<HydrateClient>

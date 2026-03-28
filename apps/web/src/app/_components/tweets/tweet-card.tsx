@@ -3,6 +3,7 @@
 import type { RouterOutputs } from "@feather/api";
 import { cn } from "@feather/ui";
 import { Button } from "@feather/ui/button";
+import { Heart } from "@feather/ui/icons";
 import { toast } from "@feather/ui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -21,6 +22,78 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 	const prefetchProfile = (profileId: string) => {
 		queryClient.prefetchQuery(trpc.user.profile.queryOptions({ profileId }));
 	};
+
+	// const likeTweet = useMutation(
+	// 	trpc.tweet.like.mutationOptions({
+	// 		onSuccess: async () => {
+	// 			await queryClient.invalidateQueries(trpc.tweet.pathFilter());
+	// 		},
+	// 		onError: (err) => {
+	// 			toast.error(
+	// 				err.data?.code === "UNAUTHORIZED"
+	// 					? "You must be logged in to like a tweet"
+	// 					: "Failed to like tweet",
+	// 			);
+	// 		},
+	// 	}),
+	// );
+
+	const likeTweet = useMutation(
+		trpc.tweet.like.mutationOptions({
+			onMutate: async ({ tweetId }) => {
+				await queryClient.cancelQueries(trpc.tweet.pathFilter());
+
+				const previousData = queryClient.getQueryData(
+					trpc.tweet.all.infiniteQueryOptions({}).queryKey,
+				);
+
+				queryClient.setQueryData(
+					trpc.tweet.all.infiniteQueryOptions({}).queryKey,
+					(old) => {
+						if (!old) return old;
+						return {
+							...old,
+							pages: old.pages.map((page) => ({
+								...page,
+								tweets: page.tweets.map((t) =>
+									t.id === tweetId
+										? { ...t, likedByUser: true, likeCount: t.likeCount + 1 }
+										: t,
+								),
+							})),
+						};
+					},
+				);
+
+				return { previousData };
+			},
+			onError: (_err, _, context) => {
+				queryClient.setQueryData(
+					trpc.tweet.all.infiniteQueryOptions({}).queryKey,
+					context?.previousData,
+				);
+				toast.error("Failed to like tweet");
+			},
+			onSettled: () => {
+				queryClient.invalidateQueries(trpc.tweet.pathFilter());
+			},
+		}),
+	);
+
+	const unlikeTweet = useMutation(
+		trpc.tweet.unlike.mutationOptions({
+			onSuccess: async () => {
+				await queryClient.invalidateQueries(trpc.tweet.pathFilter());
+			},
+			onError: (err) => {
+				toast.error(
+					err.data?.code === "UNAUTHORIZED"
+						? "You must be logged in to unlike a tweet"
+						: "Failed to unlike tweet",
+				);
+			},
+		}),
+	);
 
 	const deleteTweet = useMutation(
 		trpc.tweet.delete.mutationOptions({
@@ -100,12 +173,34 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 
 				{/* Actions */}
 				<div className="mt-4 flex items-center gap-6 text-muted-foreground text-xs">
-					<button
-						type="button"
-						className="hover:text-primary transition-colors"
-					>
-						❤️ {tweet.likeCount ?? 0}
-					</button>
+					<span className="flex items-center justify-center gap-1.5">
+						<button
+							type="button"
+							onClick={() => {
+								if (!session?.user.id) return;
+								if (tweet.likedByUser) {
+									unlikeTweet.mutate({
+										tweetId: tweet.id,
+										userId: session?.user.id,
+									});
+								} else {
+									likeTweet.mutate({
+										tweetId: tweet.id,
+										userId: session?.user.id,
+									});
+								}
+							}}
+						>
+							<Heart
+								className={cn(
+									"h-5 w-5 hover:text-primary transition-colors cursor-pointer",
+									tweet.likedByUser ? "text-emerald-500" : "text-red-500",
+								)}
+							/>
+						</button>
+
+						<span className="text-sm">{tweet.likeCount ?? 0}</span>
+					</span>
 				</div>
 			</div>
 		</div>
