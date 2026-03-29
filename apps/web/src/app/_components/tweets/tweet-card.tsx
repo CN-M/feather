@@ -193,7 +193,7 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 						>
 							<Heart
 								className={cn(
-									"h-5 w-5 hover:text-primary transition-colors cursor-pointer",
+									"h-5 w-5 md:hover:text-primary transition-colors cursor-pointer",
 									tweet.likedByUser ? "text-emerald-500" : "text-red-500",
 								)}
 							/>
