@@ -17,7 +17,6 @@ export const tweetRouter = {
 	all: publicProcedure
 		.input(z.object({ cursor: z.date().optional() }))
 		.query(({ ctx, input: { cursor } }) => {
-			console.log({ session: ctx.session?.user.id });
 			return getAllTweets(ctx.db, ctx.session?.user.id, cursor);
 		}),
 
@@ -70,8 +69,6 @@ export const tweetRouter = {
 	create: protectedProcedure
 		.input(CreateTweetSchema)
 		.mutation(({ ctx, input: { content } }) => {
-			console.log({ session: ctx.session });
-
 			return createTweet(ctx.db, {
 				content: content,
 				authorId: ctx.session.user.id,
