@@ -3,6 +3,7 @@ import {
 	createTweet,
 	deleteTweet,
 	getAllTweets,
+	getFollowFeed,
 	getProfileFeedbyId,
 	getTweetById,
 	getTweetsLikedByProfile,
@@ -36,9 +37,18 @@ export const tweetRouter = {
 			);
 		}),
 
+	following: protectedProcedure
+		.input(
+			z.object({
+				cursor: z.date().optional(),
+			}),
+		)
+		.query(({ ctx, input: { cursor } }) => {
+			return getFollowFeed(ctx.db, ctx.session?.user.id, cursor);
+		}),
+
 	profileLikeFeed: publicProcedure
 		.input(z.object({ profileId: z.string(), cursor: z.date().optional() }))
-		// .input(z.object({ profileId: z.string() }))
 		.query(({ ctx, input: { profileId, cursor } }) => {
 			return getTweetsLikedByProfile(
 				ctx.db,

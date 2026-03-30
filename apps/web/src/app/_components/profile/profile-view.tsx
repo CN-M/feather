@@ -102,10 +102,10 @@ export const ProfileView = ({ profileId }: { profileId: string }) => {
 
 				<Tabs defaultValue="posts">
 					<TabsList className="w-full justify-start rounded-none border-b border-border bg-background">
-						<TabsTrigger value="posts" className="flex-1">
+						<TabsTrigger value="posts" className="flex-1 cursor-pointer">
 							Posts
 						</TabsTrigger>
-						<TabsTrigger value="likes" className="flex-1">
+						<TabsTrigger value="likes" className="flex-1 cursor-pointer">
 							Likes
 						</TabsTrigger>
 					</TabsList>
