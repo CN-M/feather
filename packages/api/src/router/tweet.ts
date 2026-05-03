@@ -65,15 +65,16 @@ export const tweetRouter = {
 		}),
 
 	like: protectedProcedure
-		.input(z.object({ tweetId: z.string(), userId: z.string() }))
-		.mutation(({ ctx, input }) => {
-			return likeTweet(ctx.db, input);
+		.input(z.object({ tweetId: z.string() }))
+		.mutation(({ ctx, input: { tweetId } }) => {
+			// Always act as the authenticated user — never trust a client-supplied id.
+			return likeTweet(ctx.db, { tweetId, userId: ctx.session.user.id });
 		}),
 
 	unlike: protectedProcedure
-		.input(z.object({ tweetId: z.string(), userId: z.string() }))
-		.mutation(({ ctx, input }) => {
-			return unlikeTweet(ctx.db, input);
+		.input(z.object({ tweetId: z.string() }))
+		.mutation(({ ctx, input: { tweetId } }) => {
+			return unlikeTweet(ctx.db, { tweetId, userId: ctx.session.user.id });
 		}),
 
 	create: protectedProcedure
@@ -88,6 +89,6 @@ export const tweetRouter = {
 	delete: protectedProcedure
 		.input(z.object({ id: z.string() }))
 		.mutation(({ ctx, input: { id } }) => {
-			return deleteTweet(ctx.db, id);
+			return deleteTweet(ctx.db, id, ctx.session.user.id);
 		}),
 } satisfies TRPCRouterRecord;

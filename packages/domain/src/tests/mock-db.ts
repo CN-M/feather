@@ -16,6 +16,7 @@ export function createMockDb() {
 		limit: mockLimit,
 		insert: vi.fn().mockReturnThis(),
 		values: vi.fn().mockReturnThis(),
+		onConflictDoNothing: vi.fn().mockReturnThis(),
 		returning: mockReturning,
 		delete: vi.fn().mockReturnThis(),
 		query: {
