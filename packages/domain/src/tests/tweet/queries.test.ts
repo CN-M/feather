@@ -81,23 +81,17 @@ describe("getTweetById", () => {
 		db = createMockDb();
 	});
 
-	it("returns null when tweet not found", async () => {
-		db.query.tweet.findFirst.mockResolvedValue(null);
+	it("returns undefined when tweet not found", async () => {
+		db.limit.mockResolvedValue([]);
 
 		const result = await getTweetById(db, "nonexistent-id");
 
-		expect(result).toBeNull();
+		expect(result).toBeUndefined();
 	});
 
 	it("returns tweet with author and likes when found", async () => {
-		const mockTweet = {
-			id: "tweet-1",
-			content: "Hello world",
-			createdAt: new Date(),
-			author: { id: "user-1", name: "Alice", image: null },
-			likeCount: 1,
-		};
-		db.query.tweet.findFirst.mockResolvedValue(mockTweet);
+		const mockTweet = makeMockTweet({ id: "tweet-1", likeCount: 1 });
+		db.limit.mockResolvedValue([mockTweet]);
 
 		const result = await getTweetById(db, "tweet-1");
 
@@ -106,10 +100,12 @@ describe("getTweetById", () => {
 		expect(result?.likeCount).toBe(1);
 	});
 
-	it("calls findFirst with correct tweet id", async () => {
+	it("queries scoped to the given tweet id", async () => {
+		db.limit.mockResolvedValue([]);
+
 		await getTweetById(db, "tweet-abc");
 
-		expect(db.query.tweet.findFirst).toHaveBeenCalled();
+		expect(db.where).toHaveBeenCalled();
 	});
 });
 
