@@ -5,6 +5,7 @@ import {
 	getAllTweets,
 	getFollowFeed,
 	getProfileFeedbyId,
+	getReplies,
 	getTweetById,
 	getTweetsLikedByProfile,
 	likeTweet,
@@ -64,6 +65,12 @@ export const tweetRouter = {
 			return getTweetById(ctx.db, id, ctx.session?.user.id);
 		}),
 
+	replies: publicProcedure
+		.input(z.object({ tweetId: z.string(), cursor: z.date().optional() }))
+		.query(({ ctx, input: { tweetId, cursor } }) => {
+			return getReplies(ctx.db, tweetId, ctx.session?.user.id, cursor);
+		}),
+
 	like: protectedProcedure
 		.input(z.object({ tweetId: z.string() }))
 		.mutation(({ ctx, input: { tweetId } }) => {
@@ -79,9 +86,10 @@ export const tweetRouter = {
 
 	create: protectedProcedure
 		.input(CreateTweetSchema)
-		.mutation(({ ctx, input: { content } }) => {
+		.mutation(({ ctx, input: { content, parentId } }) => {
 			return createTweet(ctx.db, {
 				content: content,
+				parentId: parentId,
 				authorId: ctx.session.user.id,
 			});
 		}),

@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { index, pgTable, unique } from "drizzle-orm/pg-core";
+import { type AnyPgColumn, index, pgTable, unique } from "drizzle-orm/pg-core";
 
 import { user } from "./auth-schema";
 
@@ -12,6 +12,11 @@ export const tweet = pgTable(
 			.text()
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
+		// Self-reference: a reply points at the tweet it replies to. Null for
+		// top-level tweets. Cascade so deleting a tweet removes its replies.
+		parentId: t.uuid().references((): AnyPgColumn => tweet.id, {
+			onDelete: "cascade",
+		}),
 		createdAt: t.timestamp().notNull().defaultNow(),
 		updatedAt: t
 			.timestamp({ withTimezone: true })
@@ -27,6 +32,8 @@ export const tweet = pgTable(
 			table.authorId,
 			table.createdAt,
 		),
+		// Index for fetching a tweet's replies (thread view)
+		parentIdIdx: index("tweet_parent_id_idx").on(table.parentId),
 	}),
 );
 
@@ -63,6 +70,12 @@ export const tweetRelations = relations(tweet, ({ one, many }) => ({
 		fields: [tweet.authorId],
 		references: [user.id],
 	}),
+	parent: one(tweet, {
+		fields: [tweet.parentId],
+		references: [tweet.id],
+		relationName: "tweet_replies",
+	}),
+	replies: many(tweet, { relationName: "tweet_replies" }),
 	likes: many(like),
 }));
 

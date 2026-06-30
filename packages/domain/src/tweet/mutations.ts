@@ -9,6 +9,8 @@ export const createTweet = (
 	return db.insert(tweet).values({
 		content: input.content,
 		authorId: input.authorId,
+		// Only set parentId for replies; top-level tweets leave it null.
+		...(input.parentId ? { parentId: input.parentId } : {}),
 	});
 };
 

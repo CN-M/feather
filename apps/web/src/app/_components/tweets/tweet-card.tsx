@@ -3,7 +3,7 @@
 import type { RouterOutputs } from "@feather/api";
 import { cn } from "@feather/ui";
 import { Button } from "@feather/ui/button";
-import { Heart } from "@feather/ui/icons";
+import { Heart, MessageCircle } from "@feather/ui/icons";
 import { toast } from "@feather/ui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -197,6 +197,15 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 
 						<span className="text-sm">{tweet.likeCount ?? 0}</span>
 					</span>
+
+					<Link
+						href={`/tweet/${tweet.id}`}
+						prefetch
+						aria-label="View thread"
+						className="flex items-center justify-center transition-colors hover:text-primary"
+					>
+						<MessageCircle className="h-5 w-5" />
+					</Link>
 				</div>
 			</div>
 		</div>

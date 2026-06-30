@@ -1,3 +1,3 @@
-import { Heart } from "lucide-react";
+import { ArrowLeft, Heart, MessageCircle } from "lucide-react";
 
-export { Heart };
+export { ArrowLeft, Heart, MessageCircle };

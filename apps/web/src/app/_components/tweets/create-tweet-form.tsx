@@ -18,7 +18,15 @@ const CreateTweetSchema = z.object({
 		.max(280, "Tweet cannot exceed 280 characters"),
 });
 
-export function CreateTweetForm() {
+export function CreateTweetForm({
+	parentId,
+	placeholder = "What's happening?",
+	submitLabel = "Tweet",
+}: {
+	parentId?: string;
+	placeholder?: string;
+	submitLabel?: string;
+} = {}) {
 	const [userAvatar, setUserAvatar] = useState<null | string>(null);
 	const [userName, setUserName] = useState<null | string>(null);
 
@@ -85,7 +93,8 @@ export function CreateTweetForm() {
 		validators: {
 			onSubmit: CreateTweetSchema,
 		},
-		onSubmit: (data) => createTweet.mutate(data.value),
+		onSubmit: (data) =>
+			createTweet.mutate({ content: data.value.content, parentId }),
 	});
 
 	return (
@@ -128,7 +137,7 @@ export function CreateTweetForm() {
 										value={field.state.value}
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}
-										placeholder="What's happening?"
+										placeholder={placeholder}
 										maxLength={280}
 										className="resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground"
 										rows={3}
@@ -145,7 +154,7 @@ export function CreateTweetForm() {
 											size="sm"
 											disabled={createTweet.isPending}
 										>
-											{createTweet.isPending ? "Posting..." : "Tweet"}
+											{createTweet.isPending ? "Posting..." : submitLabel}
 										</Button>
 									</div>
 
