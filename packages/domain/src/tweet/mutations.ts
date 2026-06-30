@@ -12,8 +12,12 @@ export const createTweet = (
 	});
 };
 
-export async function deleteTweet(db: DB, id: string) {
-	return db.delete(tweet).where(eq(tweet.id, id));
+export async function deleteTweet(db: DB, id: string, authorId: string) {
+	// Scope the delete to the author so a user can only delete their own tweets.
+	return db
+		.delete(tweet)
+		.where(and(eq(tweet.id, id), eq(tweet.authorId, authorId)))
+		.returning({ id: tweet.id });
 }
 
 export const likeTweet = async (
@@ -22,20 +26,24 @@ export const likeTweet = async (
 ) => {
 	const { tweetId, userId } = input;
 
-	return db
-		.insert(like)
-		.values({
-			tweetId,
-			userId,
-		})
-		.returning({
-			id: like.id,
-			tweetId: like.tweetId,
-			userId: like.userId,
-		});
+	return (
+		db
+			.insert(like)
+			.values({
+				tweetId,
+				userId,
+			})
+			// The (userId, tweetId) unique constraint makes a repeat like a no-op
+			// instead of throwing, keeping the mutation idempotent.
+			.onConflictDoNothing()
+			.returning({
+				id: like.id,
+				tweetId: like.tweetId,
+				userId: like.userId,
+			})
+	);
 };
 
-// export async function unlikeTweet(db: DB, input: { likeId: string }) {
 export async function unlikeTweet(
 	db: DB,
 	input: { tweetId: string; userId: string },

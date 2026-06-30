@@ -64,7 +64,7 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 * [X] `deleteTweet`
 * [X] `likeTweet`
 * [X] `unlikeTweet`
-* [ ] Validation (length, ownership)
+* [X] Validation (length, ownership)
 
 ### User / Follow Domain
 
@@ -76,14 +76,14 @@ Build a production-minded Twitter-like app with clean domain boundaries, type-sa
 ### Timeline Queries
 
 * [X] Global feed query
-* [ ] Following feed query
+* [X] Following feed query
 * [X] Profile feed query
 * [X] Cursor-based pagination
 
 ### Guardrails
 
-* [ ] Ownership checks
-* [ ] Duplicate like protection
+* [X] Ownership checks
+* [X] Duplicate like protection
 * [X] Follow self prevention
 
 **End of Phase Check**

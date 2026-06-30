@@ -179,15 +179,9 @@ export function TweetCard({ tweet }: { tweet: Tweet }) {
 							onClick={() => {
 								if (!session?.user.id) return;
 								if (tweet.likedByUser) {
-									unlikeTweet.mutate({
-										tweetId: tweet.id,
-										userId: session?.user.id,
-									});
+									unlikeTweet.mutate({ tweetId: tweet.id });
 								} else {
-									likeTweet.mutate({
-										tweetId: tweet.id,
-										userId: session?.user.id,
-									});
+									likeTweet.mutate({ tweetId: tweet.id });
 								}
 							}}
 						>

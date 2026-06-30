@@ -1,21 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { getTweetsLikedByProfile } from "../../tweet/queries";
-import { createMockDb, type MockDb } from "../mock-db";
-
-const makeMockLikeWithTweet = (overrides = {}) => ({
-	id: crypto.randomUUID(),
-	userId: "user-1",
-	tweetId: "tweet-1",
-	createdAt: new Date(),
-	tweet: {
-		id: "tweet-1",
-		content: "Hello world",
-		createdAt: new Date("2024-01-01T00:00:00Z"),
-		author: { id: "user-2", name: "Bob", image: null },
-		likes: [],
-	},
-	...overrides,
-});
+import { createMockDb, type MockDb, makeMockTweet } from "../mock-db";
 
 describe("getTweetsLikedByProfile", () => {
 	let db: MockDb;
@@ -25,7 +10,7 @@ describe("getTweetsLikedByProfile", () => {
 	});
 
 	it("returns empty tweets and null cursor when user has no likes", async () => {
-		db.query.like.findMany.mockResolvedValue([]);
+		db.limit.mockResolvedValue([]);
 
 		const result = await getTweetsLikedByProfile(db, "user-1");
 
@@ -34,18 +19,9 @@ describe("getTweetsLikedByProfile", () => {
 	});
 
 	it("maps liked tweets correctly with likeCount", async () => {
-		const mockLikes = [
-			makeMockLikeWithTweet({
-				tweet: {
-					id: "tweet-1",
-					content: "Hello world",
-					createdAt: new Date(),
-					author: { id: "user-2", name: "Bob", image: null },
-					likes: [{ id: "like-1" }, { id: "like-2" }],
-				},
-			}),
-		];
-		db.query.like.findMany.mockResolvedValue(mockLikes);
+		db.limit.mockResolvedValue([
+			makeMockTweet({ id: "tweet-1", content: "Hello world", likeCount: 2 }),
+		]);
 
 		const result = await getTweetsLikedByProfile(db, "user-1");
 
@@ -56,18 +32,14 @@ describe("getTweetsLikedByProfile", () => {
 
 	it("sets nextCursor when exactly 20 results", async () => {
 		const lastDate = new Date("2024-01-20T00:00:00Z");
-		const mockLikes = Array.from({ length: 20 }, (_, i) =>
-			makeMockLikeWithTweet({
-				tweet: {
+		db.limit.mockResolvedValue(
+			Array.from({ length: 20 }, (_, i) =>
+				makeMockTweet({
 					id: `tweet-${i}`,
-					content: `Tweet ${i}`,
 					createdAt: i === 19 ? lastDate : new Date(),
-					author: { id: "user-2", name: "Bob", image: null },
-					likes: [],
-				},
-			}),
+				}),
+			),
 		);
-		db.query.like.findMany.mockResolvedValue(mockLikes);
 
 		const result = await getTweetsLikedByProfile(db, "user-1");
 
@@ -75,7 +47,7 @@ describe("getTweetsLikedByProfile", () => {
 	});
 
 	it("returns null cursor when fewer than 20 results", async () => {
-		db.query.like.findMany.mockResolvedValue([makeMockLikeWithTweet()]);
+		db.limit.mockResolvedValue([makeMockTweet()]);
 
 		const result = await getTweetsLikedByProfile(db, "user-1");
 
@@ -83,18 +55,12 @@ describe("getTweetsLikedByProfile", () => {
 	});
 
 	it("includes author info on each tweet", async () => {
-		db.query.like.findMany.mockResolvedValue([
-			makeMockLikeWithTweet({
-				tweet: {
-					id: "tweet-1",
-					content: "Test",
-					createdAt: new Date(),
-					author: {
-						id: "user-2",
-						name: "Bob",
-						image: "https://example.com/avatar.jpg",
-					},
-					likes: [],
+		db.limit.mockResolvedValue([
+			makeMockTweet({
+				author: {
+					id: "user-2",
+					name: "Bob",
+					image: "https://example.com/avatar.jpg",
 				},
 			}),
 		]);

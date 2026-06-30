@@ -49,42 +49,54 @@ describe("likeTweet", () => {
 
 		expect(result).toHaveLength(0);
 	});
+
+	it("is idempotent — a duplicate like is a no-op via onConflictDoNothing", async () => {
+		await likeTweet(db, { tweetId: "tweet-1", userId: "user-1" });
+
+		expect(db.onConflictDoNothing).toHaveBeenCalled();
+	});
 });
 
-// describe("unlikeTweet", () => {
-// 	let db: MockDb;
+describe("unlikeTweet", () => {
+	let db: MockDb;
 
-// 	beforeEach(() => {
-// 		db = createMockDb();
-// 	});
+	beforeEach(() => {
+		db = createMockDb();
+	});
 
-// 	it("deletes like with correct likeId", async () => {
-// 		db.returning.mockResolvedValue([makeMockLike({ id: "like-123" })]);
+	it("deletes the like matching the tweetId and userId", async () => {
+		db.returning.mockResolvedValue([makeMockLike({ id: "like-123" })]);
 
-// 		await unlikeTweet(db, { likeId: "like-123" });
+		await unlikeTweet(db, { tweetId: "tweet-1", userId: "user-1" });
 
-// 		expect(db.delete).toHaveBeenCalled();
-// 		expect(db.where).toHaveBeenCalled();
-// 	});
+		expect(db.delete).toHaveBeenCalled();
+		expect(db.where).toHaveBeenCalled();
+	});
 
-// 	it("returns the deleted like", async () => {
-// 		const mockLike = makeMockLike({
-// 			id: "like-123",
-// 			tweetId: "tweet-1",
-// 			userId: "user-1",
-// 		});
-// 		db.returning.mockResolvedValue([mockLike]);
+	it("returns the deleted like", async () => {
+		const mockLike = makeMockLike({
+			id: "like-123",
+			tweetId: "tweet-1",
+			userId: "user-1",
+		});
+		db.returning.mockResolvedValue([mockLike]);
 
-// 		const result = await unlikeTweet(db, { likeId: "like-123" });
+		const result = await unlikeTweet(db, {
+			tweetId: "tweet-1",
+			userId: "user-1",
+		});
 
-// 		expect(result[0]?.id).toBe("like-123");
-// 	});
+		expect(result[0]?.id).toBe("like-123");
+	});
 
-// 	it("returns empty array when like not found", async () => {
-// 		db.returning.mockResolvedValue([]);
+	it("returns empty array when the like does not exist", async () => {
+		db.returning.mockResolvedValue([]);
 
-// 		const result = await unlikeTweet(db, { likeId: "nonexistent" });
+		const result = await unlikeTweet(db, {
+			tweetId: "tweet-1",
+			userId: "nonexistent",
+		});
 
-// 		expect(result).toHaveLength(0);
-// 	});
-// });
+		expect(result).toHaveLength(0);
+	});
+});

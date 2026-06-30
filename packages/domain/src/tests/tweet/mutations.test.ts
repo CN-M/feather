@@ -36,10 +36,12 @@ describe("deleteTweet", () => {
 		db = createMockDb();
 	});
 
-	it("calls delete with the correct tweet id", async () => {
-		await deleteTweet(db, "tweet-123");
+	it("scopes the delete to the tweet id and its author", async () => {
+		await deleteTweet(db, "tweet-123", "user-1");
 
 		expect(db.delete).toHaveBeenCalled();
+		// Ownership is enforced in the where clause (tweet id + author id).
 		expect(db.where).toHaveBeenCalled();
+		expect(db.returning).toHaveBeenCalled();
 	});
 });
